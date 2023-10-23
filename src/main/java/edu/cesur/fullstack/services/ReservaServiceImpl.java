@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import edu.cesur.fullstack.model.BookDTO;
 import edu.cesur.fullstack.model.ReservaDTO;
 import edu.cesur.fullstack.model.UserDTO;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class ReservaServiceImpl implements ReservaService{
 	
@@ -20,19 +22,20 @@ public class ReservaServiceImpl implements ReservaService{
 	BookService bookService;
 
 	@Override
-	public ReservaDTO reserveBook(Long bookId, Long userId) {
+	public ReservaDTO reserveBook(Integer bookId, Integer userId) {
 		
 		BookDTO book = bookService.getBookById(bookId);
-		int index = reservas.size();
+		log.info("El libro:\n" + book);
+		Integer index = reservas.size();
 				
 		if(book.getReservado() != true) {
-			ReservaDTO reserva = new ReservaDTO(Long.valueOf(index+1), bookId, userId, LocalDate.now(), null);
+			ReservaDTO reserva = new ReservaDTO((index+1), bookId, userId, LocalDate.now(), null);
 			book.setReservado(true);
-			System.out.println(bookService.getBookById(bookId));
+			log.info("Datos de la reserva: \n" + bookService.getBookById(bookId));
 			return reserva;				
 		}
 		
-		return null;
+		throw new RuntimeException("Este Libro ya se cuentra reservado");
 		
 		
 		//obtener el status del libro (Uso el servicio book)
@@ -41,19 +44,17 @@ public class ReservaServiceImpl implements ReservaService{
 		
 	}
 
+
 	@Override
-	public void cancelReservation(Long bookId, Long userId) {
-		//busco en mi lista de reservas si existe alguna con esos ids.
-		//si existe, pongo la fecha de retorno en el objeto de reserva 
-		//busco el libro por id y cambio el estado al libro. (uso el servicio book)
+	public ArrayList<ReservaDTO> getAllReservations() {
 		
-		
+		return reservas;
 	}
 
 	@Override
-	public ArrayList<ReservaDTO> getAllReservationsByUser(Long userId) {
+	public void cancelReservation(Integer bookId, Integer userId) {
+		// TODO Auto-generated method stub
 		
-		return null;
 	}
 	
 	

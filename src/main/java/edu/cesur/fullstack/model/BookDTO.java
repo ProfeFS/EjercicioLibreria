@@ -9,7 +9,7 @@ import lombok.Data;
 @AllArgsConstructor
 public class BookDTO { 
 
-    private Long id; 
+    private Integer id; 
 
     private String titulo; 
 

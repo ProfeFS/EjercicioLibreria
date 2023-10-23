@@ -7,9 +7,9 @@ import edu.cesur.fullstack.model.UserDTO;
 
 public interface BookService {
 	
-	boolean getStatus(Long id);
+	boolean getStatus(Integer id);
 	
-	BookDTO getBookById(Long id);
+	BookDTO getBookById(Integer id);
 	
 	BookDTO updateBookStatus(BookDTO book);
 	
